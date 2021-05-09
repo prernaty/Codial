@@ -1,7 +1,24 @@
 //const { userInfo } = require("node:os");
 const User = require('../models/user');
 module.exports.profile = function(req,res){
-    res.end('<h1>User Profile</h1>');
+   // res.end('<h1>User Profile</h1>');
+   if(req.cookies.user_id){
+        User.findById(req.cookies.user_id, function(err,user){
+            if(err){
+                console.log('Error');
+                return;
+            }
+            if(user){
+                return res.render('user_profile',{
+                    title:"User Profile",
+                    user: user
+                })
+            }
+            return res.redirect('/users/sign-in')
+        })
+   }else{
+       return res.redirect('/users/sign-in')
+   }
 }
 
 //render sign up page

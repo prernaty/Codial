@@ -14,10 +14,10 @@ module.exports.profile = function(req,res){
                     user: user
                 })
             }
-            return res.redirect('/users/sign-in')
+            return res.redirect('/users/sign-in');
         })
    }else{
-       return res.redirect('/users/sign-in')
+       return res.redirect('/users/sign-in');
    }
 }
 
@@ -30,6 +30,10 @@ module.exports.singUp = function(req,res){
 
 //render sign In page
 module.exports.singIn = function(req,res){
+    if(req.cookies.user_id)
+    {
+        res.clearCookie("user_id");
+    }
     return res.render('user_sign_in',{
         title: "Codial Sign In"
     })

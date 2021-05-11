@@ -1,11 +1,16 @@
 //const { userInfo } = require("node:os");
 const User = require('../models/user');
 module.exports.profile = function(req,res){
-    res.end('<h1>User Profile</h1>');
+    res.render('user_profile');
 }
 
 //render sign up page
 module.exports.singUp = function(req,res){
+
+    //if user is already singed in then signup page should not be visible
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile')
+    }
     return res.render('user_sign_up',{
         title: "Codial Sign Up"
     })
@@ -13,6 +18,11 @@ module.exports.singUp = function(req,res){
 
 //render sign In page
 module.exports.singIn = function(req,res){
+
+    //when user is alreaddy singedIn then singin page should not be visible
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile')
+    }
     return res.render('user_sign_in',{
         title: "Codial Sign In"
     })
@@ -45,5 +55,5 @@ module.exports.create = function(req,res){
 
 //sign in andd create a session for user
 module.exports.createSession = function(req,res){
-    //TODO
+    return res.redirect('/');
 }

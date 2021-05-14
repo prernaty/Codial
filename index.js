@@ -8,17 +8,26 @@ const port = 8000;
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 const MongoStore = require('connect-mongo')(session); //to store session cookie
+const sassMiddleware = require('node-sass-middleware');
 
 const expressLayouts = require('express-ejs-layouts');
 
+//put the sass just before server starts
+app.use(sassMiddleware({
+    src: './assets/scss',  //from where to take the css;
+    dest: './assets/css',
+    debug : true,//to display some error message
+    outputStyle: 'extended',//single line?
+    prefix: '/css' //in which folder to look in side assets
+}))
 app.use(express.urlencoded());
 app.use(cookiePareser());
 app.use(express.static('./assets'));
 
 
-//app.use(expressLayouts);
-//app.set('layout extractStyles', true);
-//app.set('layout extractScripts', true);
+app.use(expressLayouts)
+app.set('layout extractStyles', true);
+app.set('layout extractScripts', true);
 
 
 //setting view engine

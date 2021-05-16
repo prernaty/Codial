@@ -1,12 +1,14 @@
 img {
   max-width: 100%;
-  height: auto; }
+  height: auto;
+  padding-top: 20px; }
 
 .container {
-  width: 960px;
+  width: 100%;
   max-width: 100%;
-  padding: 20px;
-  margin: 0 auto; }
+  padding: 0px;
+  margin: 0 auto;
+  background-color: aqua; }
 
 .main-header .container {
   display: flex;
@@ -22,7 +24,7 @@ img {
  */
 .main-nav ul {
   margin: 1em 0 .5em;
-  text-align: center; }
+  text-align: right; }
 
 .main-nav li {
   display: inline; }
@@ -30,3 +32,7 @@ img {
 .main-nav a {
   display: inline-block;
   padding: .5em 1.5em; }
+
+@media (min-width: 960px) {
+  .main-header .container {
+    justify-content: space-between; } }

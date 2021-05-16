@@ -1,7 +1,9 @@
 //const { userInfo } = require("node:os");
 const User = require('../models/user');
 module.exports.profile = function(req,res){
-    res.render('user_profile');
+    res.render('user_profile', {
+        title: "Profile"
+    });
 }
 
 //render sign up page

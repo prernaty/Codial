@@ -1,0 +1,18 @@
+container {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    background-color: aqua; }
+  
+  .main-header {
+    display: flex;
+    align-items: left;
+    justify-content: space-around;
+    flex-wrap: wrap; }
+
+    @media (min-width: 960px) {
+        .main-header .container {
+            justify-content: space-between;
+            height: auto;
+        }
+    }

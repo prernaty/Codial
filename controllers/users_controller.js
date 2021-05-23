@@ -72,10 +72,14 @@ module.exports.create = function(req,res){
 
 //sign in andd create a session for user
 module.exports.createSession = function(req,res){
+    //using flash
+    req.flash('success','Logged In Successfully'); //name success is not necessary
     return res.redirect('/');
 }
 
 module.exports.destroySession = function(req,res){
     req.logout(); //passport function
+
+    req.flash('success','You have Logged out');
     return res.redirect('/');
 }

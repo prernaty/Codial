@@ -1,5 +1,7 @@
 //const { userInfo } = require("node:os");
 const User = require('../models/user');
+const fs = require('fs');
+const path = require('path');
 module.exports.profile = function(req,res){
     User.findById(req.params.id,function(err,user){
         res.render('user_profile', {
@@ -10,13 +12,39 @@ module.exports.profile = function(req,res){
     
 }
 
-module.exports.update = function(req,res){
+module.exports.update = async function(req,res){
     //authentication
-    if(req.user.id == req.params.id){
+    /*if(req.user.id == req.params.id){
         User.findByIdAndUpdate(req.params.id,{name:req.body.name, email: req.body.email},function(err,user){
             return res.redirect('back');
         });
     }else{
+        return res.status(401).send('Unauthorized');
+    }*/
+    if(req.user.id == req.params.id){
+        try{
+            let user = await User.findById(req.params.id);
+            User.uploadedAvatar(req,res,function(err){ //multer processes the form data due to multi form, that is why method is needed
+                if(err){console.log('***MULTER ERR***',err)}
+
+                user.name=req.body.name;
+                user.email=req.body.email;
+                if(req.file){
+                    if(user.avatar){
+                        fs.unlinkSync(path.join(__dirname,'..',user.avatar)) //to delete already stored avatar
+                    }
+                    //saving the path of the file in avatar filed in user db
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+                user.save();
+                return res.redirect('back');
+            })
+        }catch(err){
+            req.flash('error',err);
+            return res.redirect('back');
+        }
+    }else{
+        req.flash('error',"Unauthorised");
         return res.status(401).send('Unauthorized');
     }
 }

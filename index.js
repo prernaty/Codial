@@ -23,6 +23,7 @@ app.use(sassMiddleware({
 }))
 app.use(express.urlencoded());
 app.use(cookiePareser());
+app.use('/uploads', express.static(__dirname+'/uploads')); //make uploads path availbe to server
 
 //for static files
 app.use(express.static('./assets'));

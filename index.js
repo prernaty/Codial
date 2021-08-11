@@ -7,6 +7,7 @@ const app = express();
 const port = 8000;
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
+const passportJWT = require('./config/passport-jwt-strategy');
 const MongoStore = require('connect-mongo')(session); //to store session cookie
 const sassMiddleware = require('node-sass-middleware');
 const expressLayouts = require('express-ejs-layouts');
